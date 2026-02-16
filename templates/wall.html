@@ -1,0 +1,34 @@
+<video id="cam" autoplay></video>
+<canvas id="paint"></canvas>
+
+<input type="color" id="color">
+<button onclick="capture()">Capture</button>
+
+<script>
+navigator.mediaDevices.getUserMedia({video:true})
+.then(s=>cam.srcObject=s);
+
+paint.width=window.innerWidth;
+paint.height=window.innerHeight;
+
+color.oninput=e=>{
+let ctx=paint.getContext("2d");
+ctx.fillStyle=e.target.value+"55";
+ctx.fillRect(0,0,paint.width,paint.height);
+};
+
+function capture(){
+let c=document.createElement("canvas");
+let ctx=c.getContext("2d");
+c.width=paint.width;
+c.height=paint.height;
+
+ctx.drawImage(cam,0,0);
+ctx.drawImage(paint,0,0);
+
+let a=document.createElement("a");
+a.download="wall.png";
+a.href=c.toDataURL();
+a.click();
+}
+</script>

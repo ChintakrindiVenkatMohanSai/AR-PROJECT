@@ -1,0 +1,19 @@
+<h2>Measurement Tool</h2>
+
+<video id="cam" autoplay></video>
+
+<script>
+navigator.mediaDevices.getUserMedia({video:true})
+.then(s=>cam.srcObject=s);
+
+let points=[];
+document.onclick=e=>{
+points.push([e.clientX,e.clientY]);
+if(points.length==2){
+let dx=points[0][0]-points[1][0];
+let dy=points[0][1]-points[1][1];
+alert("Distance: "+Math.sqrt(dx*dx+dy*dy)+" px");
+points=[];
+}
+};
+</script>
